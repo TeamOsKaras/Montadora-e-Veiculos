@@ -3,7 +3,7 @@ import ast
 
 tela = "\t---------------------\n\t M o n t a d o r a s\n\t---------------------\n"\
     "\n\t1 - Adicionar\n\t2 - Listar\n\t3"\
-    "-  Remover\n\t4 - Editar\n\t5 - Importar Novas\n\t0 - Sair\n"
+    "-  Remover\n\t4 - Editar\n\t5 - Filtrar por\n\t6 - Importar Novas\n\t0 - Sair\n"
     
 def main():
     
@@ -32,9 +32,13 @@ def main():
 
             EDIT(Lista_Montadora)
 
-        elif resposta == 5:
+        #elif resposta == 5:
 
-            IMPORT(Lista_Montadora)
+            #IMPORT(Lista_Montadora)
+
+       # elif resposta == 6:
+
+            #FILTRO(Lista_Montadora)
 
         elif resposta == 0:
 
@@ -59,7 +63,7 @@ def iniciar():
     linhas = Arquivo_Montadora.readlines()
     Lista_Montadora = []
     for linha in linhas:
-        Lista_Montadora.append(eval('linha')) 
+        Lista_Montadora.append(eval(linha)) 
     Arquivo_Montadora.close()
     
     return Lista_Montadora
@@ -69,7 +73,7 @@ def iniciar():
 
 def Finalizar(lista):
      
-    arquivo = open('montadoras.CSV', 'r+')
+    arquivo = open('montadoras.CSV', 'w')
     for item in lista:
         arquivo.writelines(str(item) + '\n')
     arquivo.close()
@@ -81,11 +85,9 @@ def LIST(Lista_Montadora):
     print "| ID |    Nome    |  Pais  | " 
     for i in range(len(Lista_Montadora)):
 
-        print "| %d  | " % (i+1),
-        print "  %s    |" % Lista_Montadora[i]["Nome"],
-        print " %s    |" % (Lista_Montadora[i]["Pais"]),
-
-        print "\n"
+        print "| %d  |" % i,
+        print " %s    |" % Lista_Montadora[i]["Nome"], 
+        print " %s |" % Lista_Montadora[i]["Pais"]
 
     print tela
 
@@ -112,8 +114,9 @@ def REMOVE(Lista_Montadora):
     LIST(Lista_Montadora)
 
     indice = input("Digite o indice da Montadora que deseja remover: ")
-    del Lista_Montadora[indice]
-    listar(Lista_Montadora)
+    removido = Lista_Montadora.pop(indice)
+    LIST(Lista_Montadora)
+    
 
 
 
@@ -151,3 +154,4 @@ def IMPORT():
 if __name__ == "__main__":
 
     main()
+
